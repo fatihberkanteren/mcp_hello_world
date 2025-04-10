@@ -5,6 +5,7 @@ const { processMcpRequest } = require('./mcp-handler');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+const timeModel = require('./models/time');
 
 // Middleware
 app.use(cors());
@@ -17,14 +18,9 @@ app.get('/', (req, res) => {
 });
 
 // MCP endpoint that processes requests using the MCP handler
-app.post('/mcp', (req, res) => {
-  console.log('Received MCP request:', JSON.stringify(req.body, null, 2));
-  
-  // Process the request using our MCP handler
-  const response = processMcpRequest(req.body);
-  
-  // Send the response
-  res.json(response);
+app.post('/mcp/time', async (req, res) => {
+  const result = await timeModel();
+  res.json({ result });
 });
 
 // Start the server

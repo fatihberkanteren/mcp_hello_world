@@ -14,7 +14,7 @@ const handlers = {
       params: params
     };
   },
-  
+
   // Echo function - returns whatever was sent
   echo: (params) => {
     return {
@@ -22,14 +22,16 @@ const handlers = {
       data: params
     };
   },
-  
+
   // Default handler for unknown functions
   default: (functionName, params) => {
     return {
       message: `Unknown function: ${functionName}`,
       params: params
     };
-  }
+  },
+
+  time_now: require('./models/time')
 };
 
 /**
@@ -42,11 +44,11 @@ function processMcpRequest(request) {
     // Extract function name and parameters from request
     const functionName = request.function || 'hello_world';
     const params = request.parameters || {};
-    
+
     // Call the appropriate handler or default if not found
     const handler = handlers[functionName] || ((params) => handlers.default(functionName, params));
     const result = handler(params);
-    
+
     // Return success response
     return {
       status: 'success',
