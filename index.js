@@ -17,6 +17,12 @@ app.get('/', (req, res) => {
   res.json({ message: 'Hello, World!' });
 });
 
+app.get('/mcp/time', async (req, res) => {
+  const result = await timeModel();
+  res.json({ result });
+});
+
+
 // MCP endpoint that processes requests using the MCP handler
 app.post('/mcp/time', async (req, res) => {
   const result = await timeModel();
